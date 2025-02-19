@@ -1,13 +1,19 @@
-
 import { useState } from "react";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { useToast } from "@/hooks/use-toast";
+import { MessageSquarePlus, List, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
+}
+
+interface Chat {
+  id: string;
+  title: string;
+  messages: Message[];
 }
 
 const Index = () => {
@@ -16,7 +22,21 @@ const Index = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [chats, setChats] = useState<Chat[]>([
+    { id: "1", title: "Previous Chat 1", messages: [] },
+    { id: "2", title: "Previous Chat 2", messages: [] },
+  ]);
   const { toast } = useToast();
+
+  const handleNewChat = () => {
+    setMessages([]);
+    setIsSidebarOpen(false);
+    toast({
+      title: "New Chat Started",
+      description: "You can now start a new conversation.",
+    });
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,39 +158,83 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <header className="border-b border-border/10 py-4 px-6 animate-fade-down bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-semibold text-foreground brand font-sans">Betablu</h1>
+    <div className="min-h-screen flex bg-black text-white">
+      <div
+        className={`fixed inset-y-0 left-0 w-64 bg-zinc-900 transform transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 lg:static`}
+      >
+        <div className="p-4 space-y-4">
+          <Button
+            onClick={handleNewChat}
+            className="w-full bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center gap-2 py-2 rounded-md transition-colors"
+          >
+            <MessageSquarePlus size={20} />
+            New Chat
+          </Button>
+          
+          <div className="space-y-2">
+            {chats.map((chat) => (
+              <button
+                key={chat.id}
+                className="w-full text-left px-4 py-2 rounded-md hover:bg-zinc-800 transition-colors text-sm text-zinc-300"
+              >
+                {chat.title}
+              </button>
+            ))}
+          </div>
         </div>
-      </header>
+      </div>
 
-      <main className="flex-1 overflow-auto">
-        <div className="max-w-4xl mx-auto py-8 space-y-6">
-          {messages.map((message, index) => (
-            <ChatMessage
-              key={index}
-              role={message.role}
-              content={message.content}
-              animate={index === messages.length - 1}
-            />
-          ))}
-          {messages.length === 0 && (
-            <div className="text-center py-12 animate-fade-up">
-              <h2 className="text-2xl font-medium text-foreground mb-2">
-                Welcome to Betablu
-              </h2>
-              <p className="text-muted-foreground">
-                Start a conversation by typing a message below.
-              </p>
-            </div>
-          )}
-        </div>
-      </main>
+      <div className="flex-1 flex flex-col min-h-screen">
+        <header className="border-b border-zinc-800 py-4 px-6 flex items-center justify-between bg-black">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="lg:hidden text-zinc-400 hover:text-white transition-colors"
+            >
+              {isSidebarOpen ? <X size={24} /> : <List size={24} />}
+            </button>
+            <h1 className="text-xl font-semibold text-white brand font-sans">Betablu</h1>
+          </div>
+          <Button
+            onClick={handleNewChat}
+            className="bg-zinc-800 hover:bg-zinc-700 text-white hidden lg:flex items-center gap-2 py-2 px-4 rounded-md transition-colors"
+          >
+            <MessageSquarePlus size={20} />
+            New Chat
+          </Button>
+        </header>
 
-      <footer className="border-t border-border/10 bg-card">
-        <ChatInput onSend={handleSendMessage} disabled={isLoading} />
-      </footer>
+        <main className="flex-1 overflow-auto bg-black">
+          <div className="max-w-4xl mx-auto py-8 space-y-6 px-4">
+            {messages.map((message, index) => (
+              <ChatMessage
+                key={index}
+                role={message.role}
+                content={message.content}
+                animate={index === messages.length - 1}
+              />
+            ))}
+            {messages.length === 0 && (
+              <div className="text-center py-12 animate-fade-up">
+                <h2 className="text-2xl font-medium text-white mb-2">
+                  Welcome to Betablu
+                </h2>
+                <p className="text-zinc-400">
+                  Start a conversation by typing a message below.
+                </p>
+              </div>
+            )}
+          </div>
+        </main>
+
+        <footer className="border-t border-zinc-800 bg-black">
+          <div className="max-w-4xl mx-auto">
+            <ChatInput onSend={handleSendMessage} disabled={isLoading} />
+          </div>
+        </footer>
+      </div>
     </div>
   );
 };
