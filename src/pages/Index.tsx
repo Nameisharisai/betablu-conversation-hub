@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { useToast } from "@/hooks/use-toast";
-import { MessageSquarePlus, List, X } from "lucide-react";
+import { MessageSquarePlus, List, X, Plus, Settings, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Message {
@@ -10,10 +11,12 @@ interface Message {
   content: string;
 }
 
-interface Chat {
+interface Agent {
   id: string;
-  title: string;
-  messages: Message[];
+  name: string;
+  description: string;
+  type: "code" | "content" | "custom";
+  capabilities: string[];
 }
 
 const Index = () => {
@@ -23,18 +26,29 @@ const Index = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [chats, setChats] = useState<Chat[]>([
-    { id: "1", title: "Previous Chat 1", messages: [] },
-    { id: "2", title: "Previous Chat 2", messages: [] },
+  const [showAgentCreator, setShowAgentCreator] = useState(false);
+  const [agents, setAgents] = useState<Agent[]>([
+    {
+      id: "1",
+      name: "Code Writer",
+      description: "AI agent that writes and reviews code",
+      type: "code",
+      capabilities: ["Write code", "Debug code", "Code review"]
+    },
+    {
+      id: "2",
+      name: "Content Creator",
+      description: "Creates content for social media",
+      type: "content",
+      capabilities: ["Write posts", "Generate hashtags", "Schedule content"]
+    }
   ]);
-  const { toast } = useToast();
 
-  const handleNewChat = () => {
-    setMessages([]);
-    setIsSidebarOpen(false);
+  const handleNewAgent = () => {
+    setShowAgentCreator(true);
     toast({
-      title: "New Chat Started",
-      description: "You can now start a new conversation.",
+      title: "Create New Agent",
+      description: "Configure your custom AI agent.",
     });
   };
 
@@ -43,8 +57,8 @@ const Index = () => {
     if (email && password) {
       setIsLoggedIn(true);
       toast({
-        title: "Welcome back!",
-        description: "You have successfully logged in.",
+        title: "Welcome to BetaBlu",
+        description: "Build and manage your AI agents.",
       });
     }
   };
@@ -54,12 +68,13 @@ const Index = () => {
       setIsLoading(true);
       setMessages((prev) => [...prev, { role: "user", content }]);
 
+      // Simulated AI response - will be replaced with actual API calls
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
           {
             role: "assistant",
-            content: "I am a simulated response. This is a placeholder message that will be replaced with actual AI responses once integrated with a backend service.",
+            content: "I am a BetaBlu agent. I can help you with coding, content creation, and custom tasks. What would you like me to do?",
           },
         ]);
         setIsLoading(false);
@@ -67,7 +82,7 @@ const Index = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: "Failed to process your request. Please try again.",
         variant: "destructive",
       });
       setIsLoading(false);
@@ -76,30 +91,30 @@ const Index = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen flex flex-col bg-background">
-        <header className="border-b border-border/10 py-4 px-6 animate-fade-down bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="min-h-screen flex flex-col bg-black">
+        <header className="border-b border-zinc-800 py-4 px-6 animate-fade-down">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-2xl font-semibold text-foreground brand font-sans">Betablu</h1>
+            <h1 className="text-2xl font-semibold text-white brand font-sans">BetaBlu</h1>
           </div>
         </header>
 
         <main className="flex-1 flex items-center justify-center p-6">
           <div className="w-full max-w-md space-y-8 animate-fade-up">
             <div className="text-center space-y-4 animate-float">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground">
-                Welcome to Betablu
+              <h2 className="text-3xl font-bold tracking-tight text-white">
+                Welcome to BetaBlu
               </h2>
-              <p className="text-sm text-muted-foreground">
-                Sign in to start your conversation
+              <p className="text-sm text-zinc-400">
+                Build your own AI agents for code, content, and more
               </p>
             </div>
 
             <form onSubmit={handleLogin} className="mt-8 space-y-6">
-              <div className="space-y-4 rounded-lg bg-card p-8 shadow-lg ring-1 ring-border/5 backdrop-blur-sm">
+              <div className="space-y-4 rounded-lg bg-zinc-900 p-8 shadow-lg ring-1 ring-zinc-800">
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-foreground"
+                    className="block text-sm font-medium text-zinc-300"
                   >
                     Email address
                   </label>
@@ -109,7 +124,7 @@ const Index = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="mt-2 block w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-colors"
+                    className="mt-2 block w-full rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-white placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -117,7 +132,7 @@ const Index = () => {
                 <div>
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-foreground"
+                    className="block text-sm font-medium text-zinc-300"
                   >
                     Password
                   </label>
@@ -127,28 +142,17 @@ const Index = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="mt-2 block w-full rounded-md border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-colors"
+                    className="mt-2 block w-full rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-white placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                     placeholder="Enter your password"
                   />
                 </div>
 
-                <div>
-                  <button
-                    type="submit"
-                    className="w-full rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    Sign in
-                  </button>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Don't have an account?{" "}
-                  <a href="#" className="text-primary hover:text-primary/90 underline-offset-4 hover:underline">
-                    Sign up
-                  </a>
-                </p>
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
+                >
+                  Sign in to BetaBlu
+                </Button>
               </div>
             </form>
           </div>
@@ -166,20 +170,26 @@ const Index = () => {
       >
         <div className="p-4 space-y-4">
           <Button
-            onClick={handleNewChat}
-            className="w-full bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center gap-2 py-2 rounded-md transition-colors"
+            onClick={handleNewAgent}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 py-2 rounded-md transition-colors"
           >
-            <MessageSquarePlus size={20} />
-            New Chat
+            <Plus size={20} />
+            Create New Agent
           </Button>
           
           <div className="space-y-2">
-            {chats.map((chat) => (
+            {agents.map((agent) => (
               <button
-                key={chat.id}
-                className="w-full text-left px-4 py-2 rounded-md hover:bg-zinc-800 transition-colors text-sm text-zinc-300"
+                key={agent.id}
+                className="w-full text-left px-4 py-3 rounded-md hover:bg-zinc-800 transition-colors group"
               >
-                {chat.title}
+                <div className="flex items-center gap-3">
+                  <Bot className="text-zinc-400 group-hover:text-white" size={18} />
+                  <div>
+                    <p className="text-sm font-medium text-zinc-200">{agent.name}</p>
+                    <p className="text-xs text-zinc-500">{agent.description}</p>
+                  </div>
+                </div>
               </button>
             ))}
           </div>
@@ -195,15 +205,23 @@ const Index = () => {
             >
               {isSidebarOpen ? <X size={24} /> : <List size={24} />}
             </button>
-            <h1 className="text-xl font-semibold text-white brand font-sans">Betablu</h1>
+            <h1 className="text-xl font-semibold text-white brand font-sans">BetaBlu</h1>
           </div>
-          <Button
-            onClick={handleNewChat}
-            className="bg-zinc-800 hover:bg-zinc-700 text-white hidden lg:flex items-center gap-2 py-2 px-4 rounded-md transition-colors"
-          >
-            <MessageSquarePlus size={20} />
-            New Chat
-          </Button>
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={handleNewAgent}
+              className="bg-blue-600 hover:bg-blue-700 text-white hidden lg:flex items-center gap-2"
+            >
+              <Plus size={20} />
+              Create Agent
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-zinc-400 hover:text-white"
+            >
+              <Settings size={20} />
+            </Button>
+          </div>
         </header>
 
         <main className="flex-1 overflow-auto bg-black">
@@ -219,10 +237,10 @@ const Index = () => {
             {messages.length === 0 && (
               <div className="text-center py-12 animate-fade-up">
                 <h2 className="text-2xl font-medium text-white mb-2">
-                  Welcome to Betablu
+                  Welcome to BetaBlu AI Platform
                 </h2>
-                <p className="text-zinc-400">
-                  Start a conversation by typing a message below.
+                <p className="text-zinc-400 max-w-lg mx-auto">
+                  Create and customize AI agents for your specific needs. Start by creating a new agent or chatting with existing ones.
                 </p>
               </div>
             )}
