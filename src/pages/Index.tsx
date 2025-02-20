@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { useToast } from "@/hooks/use-toast";
 import { MessageSquarePlus, List, X, Plus, Settings, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 
 interface Message {
   role: "user" | "assistant";
@@ -27,6 +27,7 @@ const Index = () => {
   const [password, setPassword] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showAgentCreator, setShowAgentCreator] = useState(false);
+  const { toast } = useToast();
   const [agents, setAgents] = useState<Agent[]>([
     {
       id: "1",
@@ -157,6 +158,8 @@ const Index = () => {
             </form>
           </div>
         </main>
+
+        <Toaster />
       </div>
     );
   }
@@ -253,6 +256,8 @@ const Index = () => {
           </div>
         </footer>
       </div>
+
+      <Toaster />
     </div>
   );
 };
