@@ -10,7 +10,7 @@ export const Navbar = () => {
   const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/chat", label: "Chat", icon: MessageSquare },
-    { href: "/agent-builder", label: "Agent Builder", icon: Settings },
+    { href: "/agent-builder", label: "IntelliAgent", icon: Settings },
     { href: "/coding-space", label: "Coding Space", icon: Code },
   ];
 

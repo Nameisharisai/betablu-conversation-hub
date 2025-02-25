@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const AgentBuilder = () => {
+const IntelliAgent = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState<"code" | "content" | "custom">("code");
@@ -19,7 +18,7 @@ const AgentBuilder = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold text-white mb-8">Create Custom AI Agent</h1>
+      <h1 className="text-3xl font-bold text-white mb-8">IntelliAgent Builder</h1>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-4 rounded-lg bg-zinc-900 p-8">
@@ -81,4 +80,4 @@ const AgentBuilder = () => {
   );
 };
 
-export default AgentBuilder;
+export default IntelliAgent;
