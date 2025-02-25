@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
-import { List, X, Plus, Settings } from "lucide-react";
+import { List, X, Plus, Settings, FileText, Brain, BarChart2, Image, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
@@ -47,9 +47,17 @@ export const ChatInterface = ({ onNewAgent, onToggleSidebar, isSidebarOpen }: Ch
     }
   };
 
+  const features = [
+    { icon: FileText, label: "Research", onClick: () => {} },
+    { icon: Brain, label: "Brainstorm", onClick: () => {} },
+    { icon: BarChart2, label: "Analyze Data", onClick: () => {} },
+    { icon: Image, label: "Create images", onClick: () => {} },
+    { icon: Code, label: "Code", onClick: () => {} },
+  ];
+
   return (
-    <div className="flex-1 flex flex-col min-h-screen">
-      <header className="border-b border-zinc-800 py-4 px-6 flex items-center justify-between bg-black">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#1A1F2C]">
+      <header className="border-b border-zinc-800 py-4 px-6 flex items-center justify-between bg-[#1A1F2C]">
         <div className="flex items-center gap-4">
           <button
             onClick={onToggleSidebar}
@@ -76,7 +84,7 @@ export const ChatInterface = ({ onNewAgent, onToggleSidebar, isSidebarOpen }: Ch
         </div>
       </header>
 
-      <main className="flex-1 overflow-auto bg-black">
+      <main className="flex-1 overflow-auto">
         <div className="max-w-4xl mx-auto py-8 space-y-6 px-4">
           {messages.map((message, index) => (
             <ChatMessage
@@ -87,19 +95,32 @@ export const ChatInterface = ({ onNewAgent, onToggleSidebar, isSidebarOpen }: Ch
             />
           ))}
           {messages.length === 0 && (
-            <div className="text-center py-12 animate-fade-up">
-              <h2 className="text-2xl font-medium text-white mb-2">
+            <div className="text-center py-12 animate-fade-up space-y-8">
+              <h2 className="text-3xl font-medium text-white mb-2">
                 Welcome to BetaBlu AI Platform
               </h2>
-              <p className="text-zinc-400 max-w-lg mx-auto">
-                Create and customize AI agents for your specific needs. Start by creating a new agent or chatting with existing ones.
+              <p className="text-zinc-400 text-lg max-w-lg mx-auto mb-8">
+                How can I help you today?
               </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                {features.map((feature) => (
+                  <Button
+                    key={feature.label}
+                    variant="outline"
+                    className="bg-zinc-800/50 border-zinc-700 hover:bg-zinc-700/50 text-zinc-300"
+                    onClick={feature.onClick}
+                  >
+                    <feature.icon className="w-5 h-5 mr-2" />
+                    {feature.label}
+                  </Button>
+                ))}
+              </div>
             </div>
           )}
         </div>
       </main>
 
-      <footer className="border-t border-zinc-800 bg-black">
+      <footer className="border-t border-zinc-800 bg-[#1A1F2C]">
         <div className="max-w-4xl mx-auto">
           <ChatInput onSend={handleSendMessage} disabled={isLoading} />
         </div>
