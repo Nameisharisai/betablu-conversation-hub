@@ -53,10 +53,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className="text-center space-y-8 animate-fade-up">
             <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-              The Future of AI is Here
+              Creating the World's Smartest and Most Affordable LLM Platform
             </h1>
             <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto">
-              Creating the world's smartest and most affordable LLM platform. Experience the next generation of AI technology.
+              Experience the next generation of AI technology. Build and deploy custom AI solutions in minutes.
             </p>
             <div className="flex items-center justify-center gap-4">
               <Button
