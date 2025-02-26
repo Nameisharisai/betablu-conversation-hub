@@ -53,27 +53,18 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className="text-center space-y-8 animate-fade-up">
             <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-              Creating the World's Smartest and Most Affordable LLM Platform
+              India's First Advanced<br />AI Research Platform
             </h1>
-            <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto">
-              Experience the next generation of AI technology. Build and deploy custom AI solutions in minutes.
+            <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto">
+              Building the next generation of AI technology with a focus on general intelligence and specialized coding capabilities.
             </p>
             <div className="flex items-center justify-center gap-4">
               <Button
-                onClick={() => navigate("/chat")}
+                onClick={() => navigate("/signup")}
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-lg"
+                className="bg-white text-black hover:bg-zinc-100 text-lg px-8"
               >
-                Try BetaBlu Now
-                <ArrowRight className="ml-2" />
-              </Button>
-              <Button
-                onClick={() => navigate("/pricing")}
-                size="lg"
-                variant="outline"
-                className="border-zinc-700 text-lg hover:bg-zinc-800"
-              >
-                View Pricing
+                Join the Revolution
               </Button>
             </div>
           </div>
@@ -147,7 +138,7 @@ const Index = () => {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <Sparkles className="w-12 h-12 text-blue-500 mx-auto mb-6" />
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Join the AI Revolution
+            Building India's Future in AI
           </h2>
           <p className="text-xl text-zinc-400 mb-8">
             Experience the future of AI technology with BetaBlu. Start building smarter applications today.
