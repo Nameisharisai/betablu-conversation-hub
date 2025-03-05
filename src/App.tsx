@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import Chat from "./pages/Chat";
 import AgentBuilder from "./pages/AgentBuilder";
 import CodingSpace from "./pages/CodingSpace";
+import ContentCreation from "./pages/ContentCreation";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { Toaster } from "./components/ui/toaster";
@@ -21,6 +22,7 @@ function App() {
             <Route path="/chat" element={<Chat />} />
             <Route path="/agent-builder" element={<AgentBuilder />} />
             <Route path="/coding-space" element={<CodingSpace />} />
+            <Route path="/content-creation" element={<ContentCreation />} />
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="/signin" element={<SignIn />} />
