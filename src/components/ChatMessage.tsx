@@ -15,7 +15,7 @@ export const ChatMessage = ({ content, role, animate = true }: ChatMessageProps)
       className={cn(
         "px-4 py-6",
         animate && "animate-fade-up",
-        isUser ? "bg-zinc-800/30" : "bg-transparent"
+        isUser ? "bg-[#2D2D2A]" : "bg-transparent"
       )}
     >
       <div className="flex items-start gap-4 max-w-3xl mx-auto">
@@ -34,7 +34,7 @@ export const ChatMessage = ({ content, role, animate = true }: ChatMessageProps)
             {isUser ? "You" : "BetaBlu"}
           </p>
           <div className="prose prose-invert max-w-none">
-            <p className="text-zinc-100">{content}</p>
+            <p className="text-white rounded-[24px] py-2">{content}</p>
           </div>
         </div>
       </div>

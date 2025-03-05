@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Play, Bug, Code, Database, GitHub, SendHorizontal, List, X, Settings, ImageIcon, VideoIcon, LayoutPanelLeft } from "lucide-react";
+import { Play, Bug, Code, Database, Github, SendHorizontal, List, X, Settings, ImageIcon, VideoIcon, LayoutPanelLeft } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -83,7 +83,7 @@ const CodingSpace = () => {
   };
 
   return (
-    <div className="flex-1 flex h-screen bg-[#121212] text-zinc-100">
+    <div className="flex-1 flex h-screen bg-[#000000] text-white">
       {/* Sidebar */}
       <div className="w-16 md:w-64 border-r border-zinc-800 bg-[#0F0F0F] flex flex-col">
         <div className="p-4 border-b border-zinc-800">
@@ -96,7 +96,7 @@ const CodingSpace = () => {
               { icon: ImageIcon, label: "Image Generation" },
               { icon: VideoIcon, label: "Video Generation" },
               { icon: Database, label: "Database" },
-              { icon: GitHub, label: "GitHub" }
+              { icon: Github, label: "GitHub" }
             ].map((item, index) => (
               <Button
                 key={index}
@@ -145,8 +145,8 @@ const CodingSpace = () => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`px-4 py-6 mb-4 rounded-lg ${
-                    message.role === "user" ? "bg-zinc-800/60" : "bg-zinc-800/30"
+                  className={`px-4 py-6 mb-4 rounded-[24px] ${
+                    message.role === "user" ? "bg-[#2D2D2A]" : "bg-[#1A1A1A]"
                   } animate-fade-up`}
                 >
                   <div className="flex items-start gap-4 max-w-3xl mx-auto">
@@ -164,7 +164,7 @@ const CodingSpace = () => {
                         {message.role === "user" ? "You" : "BetaBlu"}
                       </p>
                       <div className="prose prose-invert max-w-none">
-                        <p className="text-zinc-100 whitespace-pre-wrap">{message.content}</p>
+                        <p className="text-white whitespace-pre-wrap">{message.content}</p>
                       </div>
                     </div>
                   </div>
@@ -185,9 +185,9 @@ const CodingSpace = () => {
                       { icon: ImageIcon, label: "Create Images", desc: "Generate AI images from text" },
                       { icon: VideoIcon, label: "Create Videos", desc: "Generate video content with AI" },
                       { icon: Database, label: "Database", desc: "Query and manage your data" },
-                      { icon: GitHub, label: "GitHub", desc: "Integrate with your repositories" }
+                      { icon: Github, label: "GitHub", desc: "Integrate with your repositories" }
                     ].map((item, index) => (
-                      <div key={index} className="bg-zinc-800/30 p-4 rounded-lg hover:bg-zinc-800/60 transition-colors cursor-pointer">
+                      <div key={index} className="bg-zinc-800/30 p-4 rounded-[24px] hover:bg-zinc-800/60 transition-colors cursor-pointer">
                         <div className="flex items-center gap-3 mb-2">
                           <item.icon className="text-blue-500" size={20} />
                           <h3 className="font-medium text-white">{item.label}</h3>
@@ -206,7 +206,7 @@ const CodingSpace = () => {
                   <input
                     type="text"
                     placeholder="Describe the code you need or upload a file..."
-                    className="flex-1 p-4 pr-12 rounded-lg bg-zinc-800/50 border border-zinc-700 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="flex-1 p-4 pr-12 rounded-[24px] bg-zinc-800/50 border border-zinc-700 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     onKeyPress={(e) => {
                       if (e.key === "Enter") {
                         handleSendMessage((e.target as HTMLInputElement).value);
@@ -246,7 +246,7 @@ const CodingSpace = () => {
                     <Bug size={16} className="mr-1" /> Debug
                   </Button>
                   <Button size="sm" variant="ghost" onClick={saveToGithub}>
-                    <GitHub size={16} className="mr-1" /> Save
+                    <Github size={16} className="mr-1" /> Save
                   </Button>
                 </div>
               </div>

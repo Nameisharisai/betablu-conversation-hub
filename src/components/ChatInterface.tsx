@@ -56,8 +56,8 @@ export const ChatInterface = ({ onNewAgent, onToggleSidebar, isSidebarOpen }: Ch
   ];
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#1A1F2C]">
-      <header className="border-b border-zinc-800 py-4 px-6 flex items-center justify-between bg-[#1A1F2C]">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#000000]">
+      <header className="border-b border-zinc-800 py-4 px-6 flex items-center justify-between bg-[#1A1A1A]">
         <div className="flex items-center gap-4">
           <button
             onClick={onToggleSidebar}
@@ -70,7 +70,7 @@ export const ChatInterface = ({ onNewAgent, onToggleSidebar, isSidebarOpen }: Ch
         <div className="flex items-center gap-4">
           <Button
             onClick={onNewAgent}
-            className="bg-blue-600 hover:bg-blue-700 text-white hidden lg:flex items-center gap-2"
+            className="bg-blue-600 hover:bg-blue-700 text-white hidden lg:flex items-center gap-2 rounded-[24px]"
           >
             <Plus size={20} />
             Create Agent
@@ -107,7 +107,7 @@ export const ChatInterface = ({ onNewAgent, onToggleSidebar, isSidebarOpen }: Ch
                   <Button
                     key={feature.label}
                     variant="outline"
-                    className="bg-zinc-800/50 border-zinc-700 hover:bg-zinc-700/50 text-zinc-300"
+                    className="bg-zinc-800/50 border-zinc-700 hover:bg-zinc-700/50 text-zinc-300 rounded-[24px]"
                     onClick={feature.onClick}
                   >
                     <feature.icon className="w-5 h-5 mr-2" />
@@ -120,7 +120,7 @@ export const ChatInterface = ({ onNewAgent, onToggleSidebar, isSidebarOpen }: Ch
         </div>
       </main>
 
-      <footer className="border-t border-zinc-800 bg-[#1A1F2C]">
+      <footer className="border-t border-zinc-800 bg-[#1A1A1A]">
         <div className="max-w-4xl mx-auto">
           <ChatInput onSend={handleSendMessage} disabled={isLoading} />
         </div>

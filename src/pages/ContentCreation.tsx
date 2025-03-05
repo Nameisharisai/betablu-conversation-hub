@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ImageIcon, VideoIcon, Wand2, DownloadIcon, Share2 } from "lucide-react";
+import { ImageIcon, VideoIcon, Wand2, DownloadIcon, Share2, Sparkles, Palette, Type, Clock } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const ContentCreation = () => {
@@ -59,7 +59,7 @@ const ContentCreation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-zinc-100">
+    <div className="min-h-screen bg-[#000000] text-white">
       <div className="max-w-6xl mx-auto p-6">
         <h1 className="text-3xl font-bold mb-8 text-white">Content Creation</h1>
         
@@ -79,56 +79,102 @@ const ContentCreation = () => {
                 <label className="block text-sm font-medium text-zinc-400 mb-2">Prompt</label>
                 <Textarea
                   placeholder={`Describe the ${activeTab} you want to create...`}
-                  className="h-32 bg-zinc-800/50 border-zinc-700 text-white"
+                  className="h-32 bg-zinc-800/50 border-zinc-700 text-white rounded-[24px]"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-2">Style</label>
+                    <Select value={style} onValueChange={setStyle}>
+                      <SelectTrigger className="bg-zinc-800/50 border-zinc-700 rounded-[24px]">
+                        <Palette className="mr-2 h-4 w-4" />
+                        <SelectValue placeholder="Select style" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {activeTab === "image" ? (
+                          <>
+                            <SelectItem value="photorealistic">Photorealistic</SelectItem>
+                            <SelectItem value="cartoon">Cartoon</SelectItem>
+                            <SelectItem value="abstract">Abstract</SelectItem>
+                            <SelectItem value="portrait">Portrait</SelectItem>
+                          </>
+                        ) : (
+                          <>
+                            <SelectItem value="cinematic">Cinematic</SelectItem>
+                            <SelectItem value="animation">Animation</SelectItem>
+                            <SelectItem value="timelapse">Timelapse</SelectItem>
+                          </>
+                        )}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-2">Quality</label>
+                    <Select defaultValue="high">
+                      <SelectTrigger className="bg-zinc-800/50 border-zinc-700 rounded-[24px]">
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        <SelectValue placeholder="Select quality" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="standard">Standard</SelectItem>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="premium">Premium</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  {activeTab === "video" && (
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-400 mb-2">Duration</label>
+                      <Select defaultValue="15">
+                        <SelectTrigger className="bg-zinc-800/50 border-zinc-700 rounded-[24px]">
+                          <Clock className="mr-2 h-4 w-4" />
+                          <SelectValue placeholder="Select duration" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="15">15 seconds</SelectItem>
+                          <SelectItem value="30">30 seconds</SelectItem>
+                          <SelectItem value="60">60 seconds</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
               </div>
               
-              <div>
-                <label className="block text-sm font-medium text-zinc-400 mb-2">Style</label>
-                <Select value={style} onValueChange={setStyle}>
-                  <SelectTrigger className="bg-zinc-800/50 border-zinc-700">
-                    <SelectValue placeholder="Select style" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {activeTab === "image" ? (
-                      <>
-                        <SelectItem value="photorealistic">Photorealistic</SelectItem>
-                        <SelectItem value="cartoon">Cartoon</SelectItem>
-                        <SelectItem value="abstract">Abstract</SelectItem>
-                        <SelectItem value="portrait">Portrait</SelectItem>
-                      </>
-                    ) : (
-                      <>
-                        <SelectItem value="cinematic">Cinematic</SelectItem>
-                        <SelectItem value="animation">Animation</SelectItem>
-                        <SelectItem value="timelapse">Timelapse</SelectItem>
-                      </>
-                    )}
-                  </SelectContent>
-                </Select>
-                
+              <div className="flex flex-col gap-4">
                 <Button 
-                  className="w-full mt-6 bg-blue-600 hover:bg-blue-700"
+                  className="w-full py-6 bg-blue-600 hover:bg-blue-700 rounded-[24px]"
                   onClick={handleGenerate}
                   disabled={generating || !prompt}
                 >
                   <Wand2 className="mr-2" size={18} />
                   {generating ? `Generating ${activeTab}...` : `Generate ${activeTab}`}
                 </Button>
+                
+                <div className="bg-zinc-800/30 p-4 rounded-[24px] space-y-2">
+                  <h3 className="font-medium text-white text-sm">Pro Tip</h3>
+                  <p className="text-xs text-zinc-400">
+                    {activeTab === "image" 
+                      ? "Be specific about details like lighting, style, and subject positioning for better results." 
+                      : "Describe camera movements, transitions and scene changes for dynamic videos."}
+                  </p>
+                </div>
               </div>
             </div>
             
             {result && (
-              <div className="mt-8 border border-zinc-800 rounded-lg overflow-hidden bg-zinc-900">
+              <div className="mt-8 border border-zinc-800 rounded-[24px] overflow-hidden bg-zinc-900">
                 <div className="p-4 border-b border-zinc-800 flex justify-between items-center">
                   <h3 className="font-medium text-white">Generated {activeTab}</h3>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" className="rounded-[24px]">
                       <DownloadIcon size={16} className="mr-1" /> Download
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" className="rounded-[24px]">
                       <Share2 size={16} className="mr-1" /> Share
                     </Button>
                   </div>
@@ -138,10 +184,10 @@ const ContentCreation = () => {
                     <img 
                       src={result} 
                       alt="Generated content" 
-                      className="max-h-[400px] rounded-md" 
+                      className="max-h-[400px] rounded-[24px]" 
                     />
                   ) : (
-                    <div className="aspect-video w-full max-w-2xl bg-black rounded-md flex items-center justify-center text-zinc-500">
+                    <div className="aspect-video w-full max-w-2xl bg-black rounded-[24px] flex items-center justify-center text-zinc-500">
                       <VideoIcon size={48} />
                       <span className="ml-2">Video Preview (Placeholder)</span>
                     </div>
