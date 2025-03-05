@@ -1,7 +1,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Brain, Globe, Rocket, Newspaper } from "lucide-react";
+import { ChevronRight, Sparkles, Brain, Globe, Rocket, ArrowRight, MessageCircle, Code, Settings } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const Index = () => {
     {
       icon: Brain,
       title: "Advanced AI Models",
-      description: "Access state-of-the-art language models at affordable prices",
+      description: "Access state-of-the-art language models for a variety of use cases",
     },
     {
       icon: Globe,
@@ -24,47 +24,56 @@ const Index = () => {
     },
   ];
 
-  const blogPosts = [
+  const solutions = [
     {
-      title: "The Future of AI: BetaBlu's Vision",
-      description: "Discover how we're making advanced AI accessible to everyone",
-      date: "March 15, 2024",
-      image: "/blog-1.jpg",
+      icon: MessageCircle,
+      title: "AI Chat",
+      description: "Interact with powerful AI models through a simple chat interface",
+      path: "/chat",
     },
     {
-      title: "Building Smarter AI Agents",
-      description: "Learn about our latest developments in AI agent technology",
-      date: "March 12, 2024",
-      image: "/blog-2.jpg",
+      icon: Settings,
+      title: "IntelliAgent Builder",
+      description: "Build custom AI agents tailored to your specific needs",
+      path: "/agent-builder",
     },
     {
-      title: "AI Democratization",
-      description: "How BetaBlu is making AI affordable for businesses",
-      date: "March 10, 2024",
-      image: "/blog-3.jpg",
+      icon: Code,
+      title: "Coding Space",
+      description: "Get help with coding, debugging, and explaining complex code",
+      path: "/coding-space",
     },
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-black">
+    <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-transparent" />
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="text-center space-y-8 animate-fade-up">
-            <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+      <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/20 to-transparent dark:from-blue-900/10 dark:to-transparent" />
+        <div className="container mx-auto px-4 sm:px-6 relative">
+          <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
               India's First Advanced<br />AI Research Platform
             </h1>
-            <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-300 max-w-3xl mx-auto">
               Building the next generation of AI technology with a focus on general intelligence and specialized coding capabilities.
             </p>
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 onClick={() => navigate("/signup")}
                 size="lg"
-                className="bg-white text-black hover:bg-zinc-100 text-lg px-8"
+                className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
               >
-                Join the Revolution
+                Get Started for Free
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={() => navigate("/chat")}
+                className="w-full sm:w-auto"
+              >
+                Try Demo
               </Button>
             </div>
           </div>
@@ -72,85 +81,86 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 border-t border-zinc-800">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">Why Choose BetaBlu?</h2>
-            <p className="text-zinc-400 text-lg">Experience the most advanced AI technology at your fingertips</p>
+      <section className="py-16 md:py-24 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16">
+            <h2 className="text-3xl font-bold mb-4">Why Choose BetaBlu?</h2>
+            <p className="text-zinc-600 dark:text-zinc-400 text-lg">
+              Experience the most advanced AI technology at your fingertips
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="p-6 rounded-lg bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition-colors"
+                className="p-6 rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-zinc-200 dark:border-zinc-700 hover:shadow-md transition-shadow"
               >
-                <feature.icon className="w-12 h-12 text-blue-500 mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                <p className="text-zinc-400">{feature.description}</p>
+                <div className="p-3 mb-4 inline-flex items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+                  <feature.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Blog Section */}
-      <section className="py-20 border-t border-zinc-800">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-white mb-2">Latest from BetaBlu</h2>
-              <p className="text-zinc-400">Stay updated with the latest in AI technology</p>
-            </div>
-            <Button
-              variant="outline"
-              className="border-zinc-700 hover:bg-zinc-800"
-              onClick={() => navigate("/blog")}
-            >
-              <Newspaper className="mr-2" />
-              View All Posts
-            </Button>
+      {/* Solutions Section */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16">
+            <h2 className="text-3xl font-bold mb-4">Our Solutions</h2>
+            <p className="text-zinc-600 dark:text-zinc-400 text-lg">
+              Explore our range of AI-powered tools designed to boost your productivity
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
-              <article
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {solutions.map((solution, index) => (
+              <div
                 key={index}
-                className="group cursor-pointer"
-                onClick={() => navigate(`/blog/${index + 1}`)}
+                className="group p-6 rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-zinc-200 dark:border-zinc-700 hover:shadow-md transition-shadow"
               >
-                <div className="aspect-video rounded-lg bg-zinc-900 mb-4 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 group-hover:scale-105 transition-transform duration-300" />
+                <div className="p-3 mb-4 inline-flex items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+                  <solution.icon className="w-6 h-6" />
                 </div>
-                <div className="space-y-2">
-                  <time className="text-sm text-zinc-500">{post.date}</time>
-                  <h3 className="text-xl font-semibold text-white group-hover:text-blue-400 transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-zinc-400">{post.description}</p>
-                </div>
-              </article>
+                <h3 className="text-xl font-semibold mb-2">{solution.title}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 mb-4">{solution.description}</p>
+                <Button 
+                  variant="ghost" 
+                  className="text-blue-600 dark:text-blue-400 p-0 hover:bg-transparent hover:text-blue-700 dark:hover:text-blue-300 group-hover:translate-x-1 transition-transform"
+                  onClick={() => navigate(solution.path)}
+                >
+                  Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 border-t border-zinc-800">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <Sparkles className="w-12 h-12 text-blue-500 mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Building India's Future in AI
-          </h2>
-          <p className="text-xl text-zinc-400 mb-8">
-            Experience the future of AI technology with BetaBlu. Start building smarter applications today.
-          </p>
-          <Button
-            size="lg"
-            className="bg-blue-600 hover:bg-blue-700 text-lg"
-            onClick={() => navigate("/signup")}
-          >
-            Get Started for Free
-            <ArrowRight className="ml-2" />
-          </Button>
+      <section className="py-16 md:py-24 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <div className="inline-flex items-center justify-center p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-2">
+              <Sparkles className="w-6 h-6" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Building India's Future in AI
+            </h2>
+            <p className="text-lg text-zinc-600 dark:text-zinc-400">
+              Experience the future of AI technology with BetaBlu. Start building smarter applications today.
+            </p>
+            <Button
+              size="lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+              onClick={() => navigate("/signup")}
+            >
+              Get Started for Free
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </section>
     </div>

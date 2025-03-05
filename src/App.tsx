@@ -7,6 +7,9 @@ import NotFound from "./pages/NotFound";
 import Chat from "./pages/Chat";
 import AgentBuilder from "./pages/AgentBuilder";
 import CodingSpace from "./pages/CodingSpace";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
@@ -20,7 +23,10 @@ function App() {
             <Route path="/coding-space" element={<CodingSpace />} />
             <Route path="*" element={<NotFound />} />
           </Route>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
+        <Toaster />
       </Router>
     </ThemeProvider>
   );
